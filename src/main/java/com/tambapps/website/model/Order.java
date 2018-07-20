@@ -36,4 +36,7 @@ public class Order {
       inverseJoinColumns = @JoinColumn(name = "pizza_id"))
   private List<Pizza> pizzas;
 
+  public boolean isValid() {
+    return id != null && type != null && user != null && pizzas != null;
+  }
 }

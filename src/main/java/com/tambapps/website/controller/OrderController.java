@@ -71,11 +71,19 @@ public class OrderController {
 
   @PutMapping
   public ResponseEntity<String> updateOrder(@RequestBody Order order) {
-    System.err.println("JE SUIS LA");
-    if (!orderRepository.existsById(order.getId())) {
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    if (!order.isValid()) {
+      return ResponseEntity.badRequest().header("application/json;charset=UTF-8").body("At least one field is missing");
     }
-    orderRepository.save(order);
+    if (!orderRepository.existsById(order.getId())) {
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).header("application/json;charset=UTF-8").build();
+    }
+    try {
+      orderRepository.save(order);
+    } catch (Exception e) {
+      System.err.println("exception");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
+
     return ResponseEntity.ok().build();
   }
 
