@@ -3,6 +3,7 @@ package com.tambapps.website.model.food;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class Pizza {
   @Id
   @GeneratedValue
+  @Column(name = "pizza_id")
   private Long id;
   private String name;
   private int price;

@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface PizzaRepository extends JpaRepository<Pizza, Long> {
-  @Query(value = "select * from pizza WHERE pizza.id IN (select pizza_id from pizza_ingredient WHERE ingredient_id = ?1)", nativeQuery = true)
-  List<Pizza> findAllByIngredientsContaining(Long id);
+  @Query(value = "select * from pizza WHERE pizza.pizza_id IN (select pizza_id from pizza_ingredient WHERE ingredient_id IN ?1)", nativeQuery = true)
+  List<Pizza> findAllContainingIngredients(List<Long> ingredientIds);
 }

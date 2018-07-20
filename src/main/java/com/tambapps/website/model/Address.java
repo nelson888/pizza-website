@@ -14,6 +14,7 @@ import javax.persistence.Table;
 public class Address {
   @Id
   @GeneratedValue
+  @Column(name = "address_id")
   private Long id;
   private String state;
   @Column(name = "postal_code")
