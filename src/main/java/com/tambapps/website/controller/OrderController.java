@@ -42,7 +42,7 @@ public class OrderController {
 
   @GetMapping("/byUser/{userId}")
   public List<Order> findByUser(@PathVariable("userId") Long id) {
-    return orderRepository.findByUser(User.withId(id));
+    return orderRepository.findByUser(id);
   }
 
   @PostMapping
