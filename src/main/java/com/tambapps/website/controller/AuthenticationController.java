@@ -1,16 +1,12 @@
 package com.tambapps.website.controller;
 
 import com.tambapps.website.model.Customer;
-import com.tambapps.website.model.User;
 import com.tambapps.website.model.payload.ApiResponse;
 import com.tambapps.website.model.payload.JwtAuthenticationResponse;
 import com.tambapps.website.model.request.LoginRequest;
-import com.tambapps.website.model.request.SignUpRequest;
 import com.tambapps.website.repository.CustomerRepository;
-import com.tambapps.website.repository.UserRepository;
 import com.tambapps.website.security.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,14 +26,10 @@ import java.net.URI;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-    //TODO PAS SUR QUE CA MARCHE COMME JUTILISE LE CUSTOMER_REPOSITORY AU LIEU DU USER_REPOSITORY
-
     private final AuthenticationManager authenticationManager;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
-    //private final RoleRepository roleRepository;
-
 
     public AuthenticationController(AuthenticationManager authenticationManager, CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
         this.authenticationManager = authenticationManager;
@@ -52,9 +44,7 @@ public class AuthenticationController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+                        loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -63,27 +53,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerCustomer(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> registerCustomer(@Valid @RequestBody Customer customer) {
 
-        if(customerRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST);
-        }
-
-        // Creating customer account
-        Customer customer = new Customer();
-        customer.setEmail(signUpRequest.getEmail());
-        customer.setLastName(signUpRequest.getLastName());
-        customer.setName(signUpRequest.getName());
-        customer.setAddress(signUpRequest.getAddress());
-
-        customer.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-/*
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new AppException("User Role not set."));
-
-        user.setRoles(Collections.singleton(userRole));
-*/
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         Customer result = customerRepository.save(customer);
 
         URI location = ServletUriComponentsBuilder
