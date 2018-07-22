@@ -59,10 +59,10 @@ class PizzaList extends Component {
 
     render() {
         const pizzaViews = [];
-        this.state.pizzas.forEach((poll, pizzaIndex) => {
-            pizzaViews.push(<Poll
-                key={poll.id}
-                poll={poll}
+        this.state.pizzas.forEach((pizza, pizzaIndex) => {
+            pizzaViews.push(<Pizza
+                key={pizza.id}
+                pizza={pizza}
                 currentVote={this.state.currentVotes[pizzaIndex]} />)
         });
 
@@ -70,7 +70,7 @@ class PizzaList extends Component {
             <div className="pizzas-container">
                 {pizzaViews}
                 {
-                    !this.state.isLoading && this.state.polls.length === 0 ? (
+                    !this.state.isLoading && this.state.pizzas.length === 0 ? (
                         <div className="no-pizzas-found">
                             <span>No Pizzas Found.</span>
                         </div>
@@ -78,7 +78,7 @@ class PizzaList extends Component {
                 }
                 {
                     !this.state.isLoading && !this.state.last ? (
-                        <div className="load-more-polls">
+                        <div className="load-more-pizzas">
                             <Button type="dashed" onClick={this.handleLoadMore} disabled={this.state.isLoading}>
                                 <Icon type="plus" /> Load more
                             </Button>
