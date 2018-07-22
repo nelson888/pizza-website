@@ -2,6 +2,8 @@ package com.tambapps.website.model;
 
 import com.tambapps.website.model.food.Pizza;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode()
 @Entity
 @Table(name = "order_table")
 public class Order {
@@ -27,13 +30,16 @@ public class Order {
   @Column(name = "order_id")
   private Long id;
   @Enumerated(EnumType.STRING)
+  @NonNull
   private OrderingType type;
   @OneToOne
   @JoinColumn(name = "user_id")
+  @NonNull
   private User user;
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "order_pizza", joinColumns = @JoinColumn(name = "order_id"),
       inverseJoinColumns = @JoinColumn(name = "pizza_id"))
+  @NonNull
   private List<Pizza> pizzas;
 
   public boolean isValid() {

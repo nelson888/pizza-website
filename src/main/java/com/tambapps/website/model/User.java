@@ -7,6 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -35,6 +37,12 @@ public class User {
   @NonNull
   @Pattern(regexp = ALPHABETIC_REGEX)
   protected String lastName;
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "user_role",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private Set<UserRole> roles = new HashSet<>();
 
   public User(){}
 

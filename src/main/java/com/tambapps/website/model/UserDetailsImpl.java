@@ -3,16 +3,19 @@ package com.tambapps.website.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class UserDetailsImpl implements UserDetails {
 
     private final Long id;
     private final String name;
+    private final String lastName;
     @JsonIgnore
     private final String email;
     @JsonIgnore
@@ -30,8 +33,11 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl of(User user) {
-        return new UserDetailsImpl(user.getId(), user.getLastName() + "_" + user.getName(), user.getEmail(), user.getPassword(),
-                Collections.emptySet()); //TODO AUTHORITIES TO CHANGE???
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getName().name())
+        ).collect(Collectors.toList());
+        return new UserDetailsImpl(user.getId(), user.getName(), user.getLastName(), user.getEmail(), user.getPassword(),
+                authorities);
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

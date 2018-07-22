@@ -7,6 +7,7 @@ import com.tambapps.website.model.request.LoginRequest;
 import com.tambapps.website.repository.CustomerRepository;
 import com.tambapps.website.security.JwtTokenProvider;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,6 +55,11 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerCustomer(@Valid @RequestBody Customer customer) {
+
+        if(customerRepository.existsByEmail(customer.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse(false, "This email address is already used"));
+        }
 
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         Customer result = customerRepository.save(customer);
