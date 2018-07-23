@@ -1,4 +1,4 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 public enum UserRoleName {
     USER, ADMIN

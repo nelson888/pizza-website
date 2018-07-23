@@ -1,5 +1,6 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
+import com.tambapps.website.model.Address;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

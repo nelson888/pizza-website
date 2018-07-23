@@ -1,9 +1,8 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 import lombok.*;
 
@@ -15,7 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})}) //TODO to implement in sql script
-public class  User {
+public class User {
 
   //TODO add '-' and character like 'é', 'è', ...
   static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
