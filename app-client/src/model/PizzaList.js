@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { PIZZA_LIST_SIZE } from '../constants';
+import Pizza from './Pizza';
+import { Button, Icon, notification } from 'antd';
+import LoadingIndicator  from '../common/LoadingIndicator';
 
 import { getAllPizzas } from '../utils/APIRequests';
 import { withRouter } from 'react-router-dom';
@@ -19,7 +22,7 @@ class PizzaList extends Component {
             isLoading: false
         };
         this.loadPizzaList = this.loadPizzaList.bind(this);
-        this.handleLoadMore = this.handleLoadMore.bind(this);
+        //this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
     loadPizzaList(page = 0, size = PIZZA_LIST_SIZE) {

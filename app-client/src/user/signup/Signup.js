@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signup, checkUsernameAvailability, checkEmailAvailability } from '../../util/APIUtils';
+import { signup, checkUsernameAvailability, checkEmailAvailability } from '../../utils/APIRequests';
 import './Signup.css';
 import { Link } from 'react-router-dom';
 import { 
