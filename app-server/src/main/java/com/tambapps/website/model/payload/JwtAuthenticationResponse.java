@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class JwtAuthenticationResponse {
+    public final static String TOKEN_TYPE  = "Bearer";
     @NonNull
     private String accessToken;
-    private String tokenType = "Bearer";
+    private String tokenType = TOKEN_TYPE;
 
 }
