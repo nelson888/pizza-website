@@ -12,13 +12,9 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class UserRole {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "role_id")
-    private Long id;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 60)
+    @Id
     @NonNull
     private UserRoleName name;
 

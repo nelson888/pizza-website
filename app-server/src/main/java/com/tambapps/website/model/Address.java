@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -40,11 +40,12 @@ public class Address {
   private String street; //ex: 2 rue blabla
 
   @NonNull
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "author_id")
-  private User author;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   public static Address copy(Address address) throws NullPointerException {
     return new Address(address.state, address.postalCode, address.city, address.street,
-        address.author);
+        address.user);
   }
 }
