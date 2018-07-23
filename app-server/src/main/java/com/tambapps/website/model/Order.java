@@ -1,10 +1,10 @@
 package com.tambapps.website.model;
 
 import com.tambapps.website.model.food.Pizza;
+import com.tambapps.website.model.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class Order {
   @Enumerated(EnumType.STRING)
   @NonNull
   private OrderingType type;
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_id")
   @NonNull
   private User user;

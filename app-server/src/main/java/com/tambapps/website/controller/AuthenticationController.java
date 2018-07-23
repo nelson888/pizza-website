@@ -1,12 +1,12 @@
 package com.tambapps.website.controller;
 
-import com.tambapps.website.model.Customer;
-import com.tambapps.website.model.UserRole;
-import com.tambapps.website.model.UserRoleName;
+import com.tambapps.website.model.user.User;
+import com.tambapps.website.model.user.UserRole;
+import com.tambapps.website.model.user.UserRoleName;
 import com.tambapps.website.model.payload.ApiResponse;
 import com.tambapps.website.model.payload.JwtAuthenticationResponse;
 import com.tambapps.website.model.request.LoginRequest;
-import com.tambapps.website.repository.CustomerRepository;
+import com.tambapps.website.repository.UserRepository;
 import com.tambapps.website.security.JwtTokenProvider;
 
 import org.springframework.http.HttpStatus;
@@ -25,20 +25,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
-import java.util.HashSet;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
+    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
         this.authenticationManager = authenticationManager;
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
     }
@@ -58,16 +57,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerCustomer(@Valid @RequestBody Customer customer) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
 
-        if(customerRepository.existsByEmail(customer.getEmail())) {
+        if(userRepository.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ApiResponse(false, "This email address is already used"));
         }
 
-        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        customer.setRoles(Collections.singleton(new UserRole(UserRoleName.USER)));
-        Customer result = customerRepository.save(customer);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(new UserRole(UserRoleName.USER)));
+        User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")

@@ -1,13 +1,12 @@
 package com.tambapps.website.controller;
 
 import com.tambapps.website.exception.BadRequestException;
-import com.tambapps.website.model.UserDetailsImpl;
-import com.tambapps.website.model.UserSummary;
+import com.tambapps.website.model.user.UserDetailsImpl;
+import com.tambapps.website.model.user.UserSummary;
 import com.tambapps.website.repository.UserRepository;
 import com.tambapps.website.security.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

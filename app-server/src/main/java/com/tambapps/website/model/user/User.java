@@ -18,7 +18,7 @@ import java.util.Set;
 public class User {
 
   //TODO add '-' and character like 'é', 'è', ...
-  static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
+  public static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
 
   @Id
   @GeneratedValue

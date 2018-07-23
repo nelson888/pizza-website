@@ -5,7 +5,6 @@ DROP TABLE `order_table`;
 DROP TABLE `pizza_ingredient`;
 DROP TABLE `pizza`;
 DROP TABLE `ingredient`;
-DROP TABLE `customer`;
 DROP TABLE `address`;
 DROP TABLE `user_role`;
 DROP TABLE `user`;

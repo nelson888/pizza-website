@@ -1,5 +1,6 @@
 package com.tambapps.website.model.food;
 
+import com.tambapps.website.model.user.User;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -28,5 +30,7 @@ public class Pizza {
       inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
   private Set<Ingredient> ingredients;
   private Boolean active;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "author_id")
+  private User author;
 
 }

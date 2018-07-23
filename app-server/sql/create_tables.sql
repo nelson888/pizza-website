@@ -60,22 +60,6 @@ CREATE TABLE `address` (
   PRIMARY KEY (`address_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
---
--- Table structure for table `customer`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `customer` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
-  `address_id` int NOT NULL,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `FKg2o3t8h0g17smtr9jgypagdtv` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- Table structure for table `ingredient`
 --
@@ -99,7 +83,9 @@ CREATE TABLE `pizza` (
   `name` varchar(63) NOT NULL,
   `price` int NOT NULL,
   `active` bool NOT NULL,
-  PRIMARY KEY (`pizza_id`)
+  `author_id` int NOT NULL,
+  PRIMARY KEY (`pizza_id`),
+  FOREIGN KEY (`author_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

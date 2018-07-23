@@ -25,4 +25,5 @@ public class UserRole {
     public UserRole(String name){
         this(UserRoleName.valueOf(name));
     }
+
 }
