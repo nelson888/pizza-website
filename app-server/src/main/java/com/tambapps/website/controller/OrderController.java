@@ -54,7 +54,7 @@ public class OrderController {
   @GetMapping("/mine")
   @PreAuthorize("hasRole('USER')")
   public List<Order> findByUser(@CurrentUser UserDetailsImpl currentUser) {
-    return orderRepository.findByUser(currentUser.getId());
+    return orderRepository.findByUser(User.withId(currentUser.getId()));
   }
 
   @DeleteMapping("/{orderId}")
@@ -65,12 +65,12 @@ public class OrderController {
       throw new ForbiddenActionException("You aren't the owner of this order");
     }
     orderRepository.delete(order);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok().body(new ApiResponse(true, "Order Deleted Successfully"));
   }
 
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<?> createOrder(@CurrentUser UserDetailsImpl currentUser,@Valid OrderRequest orderRequest) {
+  public ResponseEntity<?> createOrder(@CurrentUser UserDetailsImpl currentUser, @Valid OrderRequest orderRequest) {
     User user = userRepository.findById(currentUser.getId()).orElseThrow(() ->
     new BadRequestException("There is no user with id " + currentUser.getId()));
 
