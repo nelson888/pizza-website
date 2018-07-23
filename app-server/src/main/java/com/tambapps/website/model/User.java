@@ -15,7 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})}) //TODO to implement in sql script
-public class User {
+public class  User {
 
   //TODO add '-' and character like 'é', 'è', ...
   static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
@@ -38,7 +38,7 @@ public class User {
   @Pattern(regexp = ALPHABETIC_REGEX)
   protected String lastName;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(name = "user_role",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))

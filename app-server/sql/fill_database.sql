@@ -1,5 +1,9 @@
 USE website;
 
+INSERT INTO `role` VALUE (1, 'USER');
+INSERT INTO `role` VALUE (2, 'ADMIN');
+
+
 INSERT INTO `ingredient` VALUES (1,'tomate');
 INSERT INTO `ingredient` VALUES (2,'oignon');
 INSERT INTO `ingredient` VALUES (3,'poulet');

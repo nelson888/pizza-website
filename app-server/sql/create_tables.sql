@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

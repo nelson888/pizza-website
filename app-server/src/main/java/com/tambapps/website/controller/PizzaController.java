@@ -28,16 +28,15 @@ public class PizzaController {
     this.ingredientRepository = ingredientRepository;
   }
 
-  @GetMapping
+  @GetMapping("/all")
   @PreAuthorize("hasRole('ADMIN')")
-  public List<Pizza> getAllPizza() {
+  public List<Pizza> getAllPizzas() {
     return pizzaRepository.findAll();
   }
 
   @GetMapping("/actives")
   public List<Pizza> allActive() {
-    Pizza pizza = new Pizza();
-    return pizzaRepository.findAll(Example.of(pizza));
+    return pizzaRepository.findAllByActiveTrue();
   }
 
   @GetMapping("/{id}")

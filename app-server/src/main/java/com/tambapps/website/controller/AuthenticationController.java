@@ -1,6 +1,8 @@
 package com.tambapps.website.controller;
 
 import com.tambapps.website.model.Customer;
+import com.tambapps.website.model.UserRole;
+import com.tambapps.website.model.UserRoleName;
 import com.tambapps.website.model.payload.ApiResponse;
 import com.tambapps.website.model.payload.JwtAuthenticationResponse;
 import com.tambapps.website.model.request.LoginRequest;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Collections;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -62,6 +66,7 @@ public class AuthenticationController {
         }
 
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customer.setRoles(Collections.singleton(new UserRole(UserRoleName.USER)));
         Customer result = customerRepository.save(customer);
 
         URI location = ServletUriComponentsBuilder

@@ -45,13 +45,13 @@ public class OrderController {
     this.pizzaRepository = pizzaRepository;
   }
 
-  @GetMapping
+  @GetMapping("/all")
   @PreAuthorize("hasRole('ADMIN')")
   public List<Order> getAll() { //TODO use page??
     return orderRepository.findAll();
   }
 
-  @GetMapping
+  @GetMapping("/mine")
   @PreAuthorize("hasRole('USER')")
   public List<Order> findByUser(@CurrentUser UserDetailsImpl currentUser) {
     return orderRepository.findByUser(currentUser.getId());

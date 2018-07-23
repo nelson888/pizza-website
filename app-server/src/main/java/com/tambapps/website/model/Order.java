@@ -4,6 +4,7 @@ import com.tambapps.website.model.food.Pizza;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -41,6 +43,8 @@ public class Order {
       inverseJoinColumns = @JoinColumn(name = "pizza_id"))
   @NonNull
   private List<Pizza> pizzas;
+
+  private LocalDateTime creationDate;
 
   public boolean isValid() {
     return id != null && type != null && user != null && pizzas != null;
