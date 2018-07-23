@@ -9,9 +9,8 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`role_id`)
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,11 +37,11 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_id`,`name`),
+  KEY `FKa68196081fvovjhkek5m97n3y` (`name`),
   FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
+  FOREIGN KEY (`name`) REFERENCES `role` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -57,23 +56,9 @@ CREATE TABLE `address` (
   `postal_code` int NOT NULL,
   `city` varchar(255) NOT NULL,
   `street` varchar(255) NOT NULL,
-  PRIMARY KEY (`address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
---
--- Table structure for table `customer`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `customer` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
-  `address_id` int NOT NULL,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `FKg2o3t8h0g17smtr9jgypagdtv` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
-
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`address_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -89,7 +74,7 @@ CREATE TABLE `ingredient` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `project`
+-- Table structure for table `pizza`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -99,7 +84,9 @@ CREATE TABLE `pizza` (
   `name` varchar(63) NOT NULL,
   `price` int NOT NULL,
   `active` bool NOT NULL,
-  PRIMARY KEY (`pizza_id`)
+  `author_id` int NOT NULL,
+  PRIMARY KEY (`pizza_id`),
+  FOREIGN KEY (`author_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

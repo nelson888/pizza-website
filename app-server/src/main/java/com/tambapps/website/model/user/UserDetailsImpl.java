@@ -1,4 +1,4 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

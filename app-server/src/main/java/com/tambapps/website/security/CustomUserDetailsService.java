@@ -1,7 +1,7 @@
 package com.tambapps.website.security;
 
-import com.tambapps.website.model.User;
-import com.tambapps.website.model.UserDetailsImpl;
+import com.tambapps.website.model.user.User;
+import com.tambapps.website.model.user.UserDetailsImpl;
 import com.tambapps.website.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

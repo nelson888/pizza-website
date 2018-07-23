@@ -1,4 +1,4 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,4 +11,5 @@ public class UserSummary {
     private String email;
     private String lastName;
     private String name;
+
 }

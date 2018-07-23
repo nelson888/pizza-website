@@ -1,5 +1,6 @@
 package com.tambapps.website.model;
 
+import com.tambapps.website.model.user.User;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -36,12 +39,13 @@ public class Address {
   @NotBlank
   private String street; //ex: 2 rue blabla
 
-  public static Address copy(Address address) throws NullPointerException {
-    return new Address(address.state, address.postalCode, address.city, address.street);
-  }
+  @NonNull
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-  //constructor to check npo when retrieving address from json
-  private Address(Address address) {
-    this(address.state, address.postalCode, address.city, address.street);
+  public static Address copy(Address address) throws NullPointerException {
+    return new Address(address.state, address.postalCode, address.city, address.street,
+        address.user);
   }
 }

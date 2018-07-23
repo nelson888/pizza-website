@@ -1,9 +1,10 @@
 package com.tambapps.website.configuration;
 
+import com.tambapps.website.model.user.UserRoleName;
 import com.tambapps.website.security.CustomUserDetailsService;
 import com.tambapps.website.security.JwtAuthenticationEntryPoint;
 import com.tambapps.website.security.JwtAuthenticationFilter;
-import com.tambapps.website.security.JwtTokenProvider;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -85,9 +86,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
+                .antMatchers("/api/ingredient/**")
+                .permitAll()
+                .antMatchers("/api/admin/**")
+                .hasAnyRole(UserRoleName.ADMIN.name())
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+                .antMatchers(HttpMethod.GET, "/api/pizza/**", "/api/users/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

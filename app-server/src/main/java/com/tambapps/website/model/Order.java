@@ -1,6 +1,7 @@
 package com.tambapps.website.model;
 
 import com.tambapps.website.model.food.Pizza;
+import com.tambapps.website.model.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -15,8 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -32,7 +35,7 @@ public class Order {
   @Enumerated(EnumType.STRING)
   @NonNull
   private OrderingType type;
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "user_id")
   @NonNull
   private User user;
@@ -41,6 +44,8 @@ public class Order {
       inverseJoinColumns = @JoinColumn(name = "pizza_id"))
   @NonNull
   private List<Pizza> pizzas;
+
+  private LocalDateTime creationDate;
 
   public boolean isValid() {
     return id != null && type != null && user != null && pizzas != null;

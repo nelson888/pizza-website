@@ -1,4 +1,4 @@
-package com.tambapps.website.model;
+package com.tambapps.website.model.user;
 
 import lombok.*;
 
@@ -18,7 +18,7 @@ import java.util.Set;
 public class User {
 
   //TODO add '-' and character like 'é', 'è', ...
-  static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
+  public static final String ALPHABETIC_REGEX = "[a-zA-Z]+";
 
   @Id
   @GeneratedValue
@@ -38,12 +38,18 @@ public class User {
   @Pattern(regexp = ALPHABETIC_REGEX)
   protected String lastName;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(name = "user_role",
           joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "role_id"))
+          inverseJoinColumns = @JoinColumn(name = "name"))
   private Set<UserRole> roles = new HashSet<>();
 
   public User(){}
+
+  public static User withId(Long id) {
+    User user = new User();
+    user.id = id;
+    return user;
+  }
 
 }

@@ -1,6 +1,6 @@
 package com.tambapps.website.security;
 
-import com.tambapps.website.model.UserDetailsImpl;
+import com.tambapps.website.model.user.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
