@@ -2,6 +2,7 @@ USE website;
 
 INSERT INTO `role` VALUE ('USER');
 INSERT INTO `role` VALUE ('ADMIN');
+INSERT INTO `role` VALUE ('COOK');
 
 
 INSERT INTO `ingredient` VALUES (1,'tomate');

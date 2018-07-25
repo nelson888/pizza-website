@@ -28,7 +28,7 @@ export function getAllPizzas(page, size) {
     size = size || PIZZA_LIST_SIZE;
 
     return request({
-        url: API_BASE_URL + "/pizza?page=" + page + "&size=" + size,
+        url: API_BASE_URL + "/pizza/actives?page=" + page + "&size=" + size,
         method: 'GET'
     });
 }
