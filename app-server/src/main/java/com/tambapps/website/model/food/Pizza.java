@@ -22,6 +22,9 @@ import java.util.Set;
 @Entity
 @Table(name = "pizza")
 public class Pizza {
+
+  //TODO add a DBFile that will be a picture of the pizza
+
   @Id
   @GeneratedValue
   @Column(name = "pizza_id")
