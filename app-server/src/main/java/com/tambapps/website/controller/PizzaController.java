@@ -11,12 +11,7 @@ import com.tambapps.website.repository.UserRepository;
 import com.tambapps.website.security.CurrentUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -24,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pizza")
+@RequestMapping("/api/pizza")
 public class PizzaController {
 
   private final PizzaRepository pizzaRepository;
@@ -36,7 +31,9 @@ public class PizzaController {
   }
 
   @GetMapping("/actives")
+  @CrossOrigin("http://localhost:3000")
   public List<Pizza> allActive() {
+    System.err.println("REFERFERERGERGERGERG");
     return pizzaRepository.findAllByActiveTrue();
   }
 
