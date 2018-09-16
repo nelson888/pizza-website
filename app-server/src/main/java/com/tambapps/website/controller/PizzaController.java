@@ -31,7 +31,6 @@ public class PizzaController {
   }
 
   @GetMapping("/actives")
-  @CrossOrigin("http://localhost:3000")
   public List<Pizza> allActive() {
     System.err.println("REFERFERERGERGERGERG");
     return pizzaRepository.findAllByActiveTrue();
