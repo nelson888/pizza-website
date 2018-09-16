@@ -1,4 +1,8 @@
-import {API_BASE_URL, ACCESS_TOKEN, PIZZA_LIST_SIZE} from '../constants';
+export const API_BASE_URL = 'http://localhost:8080/api';
+//export const API_BASE_URL = '/api';
+export const ACCESS_TOKEN = 'accessToken';
+
+export const PAGE_SIZE = 2;
 
 const request = (options) => {
     const headers = new Headers({
@@ -23,15 +27,60 @@ const request = (options) => {
         );
 };
 
-export function getAllPizzas(page, size) {
+export function getPizzas(page, size) {
     page = page || 0;
-    size = size || PIZZA_LIST_SIZE;
+    size = size || PAGE_SIZE;
 
     return request({
-        url: API_BASE_URL + "/pizza/actives?page=" + page + "&size=" + size,
+        url: "http://localhost:8080/api/pizza/actives",
+        //url: API_BASE_URL + "/pizza/actives?page=" + page + "&size=" + size,
         method: 'GET'
     });
 }
+const ingredients = [{
+    name:"poivre",
+    ingredient_id:0
+}, {
+    name: "sel",
+    ingredient_id:1
+}, {name:"tomate",
+    ingredient_id:2
+}];
+
+const allPizzas = [//TODO TO REMOVE
+    {id: 0, title: "pizza 1", ingredients: [ingredients[0], ingredients[1]]},
+    {id: 1, title: "pizza 2", ingredients: [ingredients[0], ingredients[2]]},
+    {id: 2, title: "pizza 3", ingredients: [ ingredients[1], ingredients[3]]},
+    {id: 3, title: "pizza 4", ingredients: ingredients},
+];
+
+export function getPizzasFake(page, size) {
+    page = page || 0;
+    size = size || PAGE_SIZE;
+
+    let sliced = [];
+    const startIndex = page * size;
+    for (let i = startIndex; i < startIndex + size; i++) {
+        sliced.push(allPizzas[i])
+    }
+    return sliced;
+}
+
+export function getPizzaCount() {
+    return allPizzas.length;
+}
+
+export function getAllIngredients() {
+    return ingredients;
+}
+
+
+
+
+
+
+
+
 
 export function createPoll(pollData) {
     return request({
@@ -100,7 +149,7 @@ export function getUserProfile(username) {
 
 export function getUserCreatedPolls(username, page, size) {
     page = page || 0;
-    size = size || PIZZA_LIST_SIZE;
+    size = size || PAGE_SIZE;
 
     return request({
         url: API_BASE_URL + "/users/" + username + "/polls?page=" + page + "&size=" + size,
@@ -110,7 +159,7 @@ export function getUserCreatedPolls(username, page, size) {
 
 export function getUserVotedPolls(username, page, size) {
     page = page || 0;
-    size = size || PIZZA_LIST_SIZE;
+    size = size || PAGE_SIZE;
 
     return request({
         url: API_BASE_URL + "/users/" + username + "/votes?page=" + page + "&size=" + size,
