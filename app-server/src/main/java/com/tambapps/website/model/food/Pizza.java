@@ -38,8 +38,6 @@ public class Pizza {
       inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
   @NotNull
   private Set<Ingredient> ingredients;
-  @NotNull
-  private Boolean active;
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "author_id")
   private User author;
