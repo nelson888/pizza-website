@@ -1,3 +1,4 @@
+-- TODO DELETE UNUSED TABLES
 USE website;
 
 INSERT INTO `role` VALUE ('USER');

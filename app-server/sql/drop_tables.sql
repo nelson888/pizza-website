@@ -1,3 +1,4 @@
+-- TODO DELETE UNUSED TABLES
 USE website;
 
 DROP TABLE `order_pizza`;

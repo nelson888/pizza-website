@@ -32,7 +32,6 @@ public class PizzaController {
 
   @GetMapping("/actives")
   public List<Pizza> allActive() {
-    System.err.println("REFERFERERGERGERGERG");
     return pizzaRepository.findAllByActiveTrue();
   }
 
