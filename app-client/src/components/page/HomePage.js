@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import './HomePage.css';
 import PizzaList from "../PizzaList";
 import Spinner from '../common/spinner';
-import {getPizzas, getPizzaCount, getAllIngredients} from '../../utils/FakeAPIRequests';
+import {getPizzas, getPizzasSearch, getPizzaCount, getAllIngredients} from '../../utils/FakeAPIRequests';
 import Pagination from '../Pagination';
 import { Link } from 'react-router-dom';
+import SearchBox from '../searchBox';
 
+const ALL_INGREDIENTS = {name: "all"};
 
 class HomePage extends Component {
 
@@ -17,14 +19,15 @@ class HomePage extends Component {
         this.handleValueChange = this.handleValueChange.bind(this);
         this.reset = this.reset.bind(this);
         this.clear = this.clear.bind(this);
-        let ingredients = [{name:"all"}, ...getAllIngredients()];
+        let ingredients = [ALL_INGREDIENTS, ...getAllIngredients()];
 
         this.state = {
             pizzas: getPizzas(0),
             currentPage: 0,
             nbTotalPizzas: getPizzaCount(),
             ingredients: ingredients,
-            selectedIngredient: ingredients[0]
+            selectedIngredient: ALL_INGREDIENTS,
+            searchQuery: ""
 
         };
     }
@@ -33,8 +36,6 @@ class HomePage extends Component {
         const counters = this.state.counters.filter(c => c.id !== id);
         this.setState({counters}); //set the property counter to the value of the const counter
     }
-
-
 
     handleValueChange(counter, addedValue) {
         const counters = [...this.state.counters]; //spread operator used to clone this array
@@ -65,15 +66,19 @@ class HomePage extends Component {
         this.setState({counters});
     }
 
+    getPizzaPage = (page, searchQuery) => {
+        return searchQuery ? getPizzasSearch(page, searchQuery) : getPizzas(page);
+    };
+
     handlePageChange = page => {
         this.setState({
             currentPage: page,
-            pizzas: getPizzas(page)
+            pizzas: this.getPizzaPage(page, this.state.searchQuery)
         });
     };
 
     handleSearch = query => {
-        this.setState({ searchQuery: query, currentPage: 0, selectedIngredient: null});
+        this.setState({ searchQuery: query, currentPage: 0, selectedIngredient: ALL_INGREDIENTS, pizzas: this.getPizzaPage(0, query), nbTotalPizzas: getPizzaCount(query) });
     };
 
     handleSpinnerSelect = (ingredient) => {
@@ -82,17 +87,17 @@ class HomePage extends Component {
     };
 
     render() {
-        const {currentPage} = this.state;
+        const {currentPage, searchQuery, ingredients, selectedIngredient, pizzas, nbTotalPizzas} = this.state;
 
         return (
             <React.Fragment>
             <div className="row">
                 <div className="col-3">
                     <Spinner
-                        items={this.state.ingredients}
+                        items={ingredients}
                         textProperty="name"
                         valueProperty="ingredient_id"
-                        selectedItem={this.state.selectedIngredient}
+                        selectedItem={selectedIngredient}
                         onItemSelect={this.handleSpinnerSelect}
                     />
                 </div>
@@ -107,11 +112,11 @@ class HomePage extends Component {
                     <SearchBox value={searchQuery} onChange={this.handleSearch}/>
                     <main className="container">
                         <PizzaList
-                            pizzas={this.state.pizzas}
+                            pizzas={pizzas}
                         />
                     </main>
                     <Pagination
-                        itemsCount={this.state.nbTotalPizzas}
+                        itemsCount={nbTotalPizzas}
                         currentPage={currentPage}
                         onPageChanged={this.handlePageChange}
                     />

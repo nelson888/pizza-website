@@ -12,9 +12,10 @@ const ingredients = [{
 
 const allPizzas = [
     {id: 0, title: "pizza 1", ingredients: [ingredients[0], ingredients[1]]},
-    {id: 1, title: "pizza 2", ingredients: [ingredients[0], ingredients[2]]},
-    {id: 2, title: "pizza 3", ingredients: [ingredients[1], ingredients[3]]},
-    {id: 3, title: "pizza 4", ingredients: ingredients},
+    {id: 1, title: "Contende", ingredients: [ingredients[0], ingredients[2]]},
+    {id: 2, title: "Castalone", ingredients: [ingredients[1], ingredients[2]]},
+    {id: 3, title: "Pierone", ingredients: ingredients},
+    {id: 4, title: "Cierone", ingredients: ingredients},
 ];
 
 export function getPizzas(page, size) {
@@ -23,14 +24,34 @@ export function getPizzas(page, size) {
 
     let sliced = [];
     const startIndex = page * size;
-    for (let i = startIndex; i < startIndex + size; i++) {
+    for (let i = startIndex; i < startIndex + size && i < allPizzas.length; i++) {
         sliced.push(allPizzas[i])
     }
     return sliced;
 }
 
+export function getPizzasSearch(page, searchQuery) {
+    page = page || 0;
+    const size = PAGE_SIZE;
 
-export function getPizzaCount() {
+    let sliced = [];
+    const startIndex = page * size;
+    const filtered = filteredPizzas(searchQuery);
+
+    for (let i = startIndex; i < startIndex + size && i < filtered.length; i++) {
+        sliced.push(filtered[i])
+    }
+    return sliced;
+}
+
+function filteredPizzas(searchQuery) {
+    return allPizzas.filter(p => p.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
+}
+export function getPizzaCount(searchQuery) {
+    if (searchQuery) {
+        const filtered = filteredPizzas(searchQuery);
+        return filtered.length;
+    }
     return allPizzas.length;
 }
 
