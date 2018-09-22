@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './HomePage.css';
 import PizzaList from "../PizzaList";
 import Spinner from '../common/spinner';
-import {getPizzasFake, getPizzaCount, getAllIngredients} from '../../utils/APIRequests';
+import {getPizzas, getPizzaCount, getAllIngredients} from '../../utils/FakeAPIRequests';
 import Pagination from '../Pagination';
+import { Link } from 'react-router-dom';
+
 
 class HomePage extends Component {
 
@@ -18,13 +20,13 @@ class HomePage extends Component {
         let ingredients = [{name:"all"}, ...getAllIngredients()];
 
         this.state = {
-            pizzas: getPizzasFake(0),
+            pizzas: getPizzas(0),
             currentPage: 0,
             nbTotalPizzas: getPizzaCount(),
             ingredients: ingredients,
             selectedIngredient: ingredients[0]
 
-    };
+        };
     }
 
     handleDelete(id) {
@@ -66,12 +68,16 @@ class HomePage extends Component {
     handlePageChange = page => {
         this.setState({
             currentPage: page,
-            pizzas: getPizzasFake(page)
+            pizzas: getPizzas(page)
         });
     };
 
+    handleSearch = query => {
+        this.setState({ searchQuery: query, currentPage: 0, selectedIngredient: null});
+    };
+
     handleSpinnerSelect = (ingredient) => {
-        this.setState({selectedIngredient: ingredient});
+        this.setState({selectedIngredient: ingredient, searchQuery: "", currentPage: 0 });
         //TODO request to backend wanted pizzas
     };
 
@@ -91,6 +97,14 @@ class HomePage extends Component {
                     />
                 </div>
                 <div className="col">
+                    <Link
+                        to="/pizzas/new"
+                        className="btn btn-primary"
+                        style={{marginBottom : 20}}
+                    >
+                        New Pizza
+                    </Link>
+                    <SearchBox value={searchQuery} onChange={this.handleSearch}/>
                     <main className="container">
                         <PizzaList
                             pizzas={this.state.pizzas}

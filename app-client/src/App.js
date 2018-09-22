@@ -7,6 +7,8 @@ import NotFoundPage from './components/page/NotFoundPage';
 import AuthorsPage from "./components/page/AuthorsPage";
 import LoginPage from "./components/page/LoginPage";
 import './App.css';
+import RegisterPage from "./components/page/RegisterPage";
+import PizzaFormPage from "./components/page/PizzaFormPage";
 //bootstrap website: https://getbootstrap.com/docs/
 /**
  * par default si un url commence par le path definit par un route, il va dedans
@@ -27,12 +29,14 @@ class App extends Component {
                 <NavBar nbPizzas={88}/>
                 <div className="content">
                     <Switch>
+                        <Route path="/pizzas/new" exact component={PizzaFormPage} />
                         <Route path="/pizzas/:id" component={PizzaPage}/>
                         <Route path="/withProps" render={(props) => <HomePage prop="prop" {...props}/>} />
                         <Route path="/not-found" exact component={NotFoundPage} />
                         <Route path="/authors" exact component={AuthorsPage} />
                         <Route path="/pizzas" exact component={HomePage} />
                         <Route path="/login" exact component={LoginPage} />
+                        <Route path="/register" exact component={RegisterPage} />
                         <Redirect from="/" exact to="/pizzas"/>
                         <Redirect to="/not-found"/>
                     </Switch>
