@@ -1,7 +1,5 @@
 import http from '../utils/httpService';
-import {API_BASE_URL} from "./constants";
-
-export const PAGE_SIZE = 2;
+import {API_BASE_URL, PAGE_SIZE} from "../utils/constants";
 
 export function getPizzasRequest(page, size) {
     page = page || 0;

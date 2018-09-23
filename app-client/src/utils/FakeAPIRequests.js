@@ -1,5 +1,5 @@
 export const PAGE_SIZE = 2;
-
+//TODO TO DELETE
 const ingredients = [{
     name:"poivre",
     ingredient_id:0

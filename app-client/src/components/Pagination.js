@@ -1,5 +1,5 @@
 import React from "react";
-import {PAGE_SIZE} from '../utils/APIRequests';
+import {PAGE_SIZE} from '../utils/constants';
 import  PropTypes from 'prop-types'; //useful for type validation (only works in developer mode) $npm i prop-types@15.6.2
 
 
