@@ -54,7 +54,6 @@ public class AdminController {
     }
     Pizza pizza = pizzaRepository.findById(pizzaId)
         .orElseThrow(() -> new ResourceNotFoundException("Pizza", "id", pizzaId));
-    pizza.setActive(active);
     pizzaRepository.save(pizza);
 
     return ResponseEntity.ok().body(new ApiResponse(true, "Pizza updated successfully"));

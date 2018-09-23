@@ -32,12 +32,7 @@ public class PizzaController {
 
   @GetMapping("/actives")
   public List<Pizza> allActive() {
-    return pizzaRepository.findAllByActiveTrue();
-  }
-
-  @GetMapping("/byIngredients") //containing at least one of the ingredients provided
-  public List<Pizza> pizzaContainingIngredients(@RequestParam("id") List<Long> ingredientIds) {
-    return pizzaRepository.findAllActiveContainingIngredients(ingredientIds);
+    return pizzaRepository.findAll();
   }
 
   @PostMapping

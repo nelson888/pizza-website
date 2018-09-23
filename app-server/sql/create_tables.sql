@@ -25,7 +25,6 @@ CREATE TABLE `role` (
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
@@ -43,23 +42,6 @@ CREATE TABLE `user_role` (
   KEY `FKa68196081fvovjhkek5m97n3y` (`name`),
   FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   FOREIGN KEY (`name`) REFERENCES `role` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `address`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `address` (
-  `address_id` int NOT NULL AUTO_INCREMENT,
-  `state` varchar(255) NOT NULL,
-  `postal_code` int NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `street` varchar(255) NOT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`address_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -82,9 +64,9 @@ CREATE TABLE `ingredient` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pizza` (
   `pizza_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(63) NOT NULL,
-  `price` int NOT NULL,
-  `active` bool NOT NULL,
+  `title` varchar(63) NOT NULL,
+  `description` varchar(63) NOT NULL,
+  `year` int NOT NULL,
   `author_id` int NOT NULL,
   PRIMARY KEY (`pizza_id`),
   FOREIGN KEY (`author_id`) REFERENCES `user` (`user_id`)
@@ -101,28 +83,4 @@ CREATE TABLE `pizza_ingredient` (
   KEY `FKa68196081fvovjhkek5m97n3y` (`ingredient_id`),
   FOREIGN KEY (`pizza_id`) REFERENCES `pizza` (`pizza_id`),
   FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`ingredient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `order_table`
---
-
-CREATE TABLE `order_table` (
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `type` varchar(16) NOT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `FKa68196081fvovjhkek5m97n3y` (`order_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `order_pizza`
---
-
-CREATE TABLE `order_pizza` (
-  `order_id` int(11) NOT NULL,
-  `pizza_id` int(11) NOT NULL,
-  FOREIGN KEY (`order_id`) REFERENCES order_table (`order_id`),
-  FOREIGN KEY (`pizza_id`) REFERENCES `pizza` (`pizza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
