@@ -1,18 +1,3 @@
-import axios from 'axios';
-
-axios.interceptors.response.use(success => {
-
-    },
-    error => {
-    const {response} = error;
-    if (response && response.status < 400 || response.status >= 500) {
-        console.log(error);
-        alert('An unexpected error occured');
-    }
-
-    return Promise.reject(error); //pass control to catch block
-    });
-
 export const API_BASE_URL = 'http://localhost:8080/api';
 //export const API_BASE_URL = '/api';
 export const ACCESS_TOKEN = 'accessToken';
@@ -42,44 +27,53 @@ const request = (options) => {
         );
 };
 
-export function getPizzasRequest(page, size) {
+export function getPizzas(page, size) {
     page = page || 0;
     size = size || PAGE_SIZE;
 
-    return axios.get(API_BASE_URL + `/pizza?page=${page}&size=${size}`);
+    return request({
+        url: "http://localhost:8080/api/pizza/actives",
+        //url: API_BASE_URL + "/pizza/actives?page=" + page + "&size=" + size,
+        method: 'GET'
+    });
+}
+const ingredients = [{
+    name:"poivre",
+    ingredient_id:0
+}, {
+    name: "sel",
+    ingredient_id:1
+}, {name:"tomate",
+    ingredient_id:2
+}];
+
+const allPizzas = [//TODO TO REMOVE
+    {id: 0, title: "pizza 1", ingredients: [ingredients[0], ingredients[1]]},
+    {id: 1, title: "pizza 2", ingredients: [ingredients[0], ingredients[2]]},
+    {id: 2, title: "pizza 3", ingredients: [ ingredients[1], ingredients[3]]},
+    {id: 3, title: "pizza 4", ingredients: ingredients},
+];
+
+export function getPizzasFake(page, size) {
+    page = page || 0;
+    size = size || PAGE_SIZE;
+
+    let sliced = [];
+    const startIndex = page * size;
+    for (let i = startIndex; i < startIndex + size; i++) {
+        sliced.push(allPizzas[i])
+    }
+    return sliced;
 }
 
-export function getPizzaCountRequest() {
-    return axios.get(API_BASE_URL + '/pizza/count');
+export function getPizzaCount() {
+    return allPizzas.length;
 }
 
 export function getAllIngredients() {
     return ingredients;
 }
 
-export function getPizzasSearchRequest(page, searchQuery) {
-    axios.get(API_BASE_URL + `/pizza?${searchQuery}`);
-}
-
-export function postPizzaRequest(pizza) {
-    return axios.post(API_BASE_URL, pizza); // in the data there should be the newly posted pizza
-}
-
-export function updatePizzaRequest(pizza) {
-    return axios.put(API_BASE_URL + `/${pizza.id}`, pizza); // in the data there should be the newly posted pizza
-}
-
-export function deletePizzaRequest(pizza) {
-    /*
-    try {
-
-    } catch (e) {
-        if (e.response && e.response.status === 404) {
-            //TODO
-        }
-    }*/
-    return axios.delete(API_BASE_URL + `/${pizza.id}`);
-}
 
 
 

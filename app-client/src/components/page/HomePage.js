@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import './HomePage.css';
 import PizzaList from "../PizzaList";
 import Spinner from '../common/spinner';
-import {getPizzas, getPizzasSearch, getPizzaCount, getAllIngredients} from '../../utils/FakeAPIRequests';
+import { getPizzasRequest, getPizzasSearchRequest, getPizzaCountRequest } from '../../controller/pizzaController';
+import { getAllIngredientsRequest } from '../../controller/ingredientController';
 import Pagination from '../Pagination';
 import { Link } from 'react-router-dom';
 import SearchBox from '../searchBox';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ALL_INGREDIENTS = {name: "all"};
 
@@ -19,17 +22,28 @@ class HomePage extends Component {
         this.handleValueChange = this.handleValueChange.bind(this);
         this.reset = this.reset.bind(this);
         this.clear = this.clear.bind(this);
-        let ingredients = [ALL_INGREDIENTS, ...getAllIngredients()];
 
         this.state = {
-            pizzas: getPizzas(0),
+            pizzas: [],
             currentPage: 0,
-            nbTotalPizzas: getPizzaCount(),
-            ingredients: ingredients,
+            ingredients: [],
             selectedIngredient: ALL_INGREDIENTS,
             searchQuery: ""
 
         };
+    }
+
+    async componentDidMount() {
+        const {data : pizzas} = await getPizzasRequest(0);
+        const {data : nbTotalPizzas} = await getPizzaCountRequest();
+        let {data: ingredients} = await getAllIngredientsRequest();
+        ingredients = [ALL_INGREDIENTS, ...ingredients];
+
+        this.setState({
+            pizzas,
+            nbTotalPizzas,
+            ingredients
+        })
     }
 
     handleDelete(id) {
@@ -67,18 +81,26 @@ class HomePage extends Component {
     }
 
     getPizzaPage = (page, searchQuery) => {
-        return searchQuery ? getPizzasSearch(page, searchQuery) : getPizzas(page);
+        return searchQuery ? getPizzasSearchRequest(page, searchQuery) : getPizzasRequest(page);
     };
 
-    handlePageChange = page => {
-        this.setState({
-            currentPage: page,
-            pizzas: this.getPizzaPage(page, this.state.searchQuery)
-        });
+    handlePageChange = async page => {
+        try {
+            const {data: pizzas} = await this.getPizzaPage(page, this.state.searchQuery);
+            this.setState({
+                currentPage: page,
+                pizzas: pizzas
+            });
+        } catch (e) { //TODO a mettre dans toutes les
+
+        }
     };
 
-    handleSearch = query => {
-        this.setState({ searchQuery: query, currentPage: 0, selectedIngredient: ALL_INGREDIENTS, pizzas: this.getPizzaPage(0, query), nbTotalPizzas: getPizzaCount(query) });
+    handleSearch = async query => {
+        const {data : pizzas} = await this.getPizzaPage(0, query);
+        const {data : nbTotalPizzas} = await getPizzaCountRequest();
+
+        this.setState({ searchQuery: query, currentPage: 0, selectedIngredient: ALL_INGREDIENTS, pizzas, nbTotalPizzas });
     };
 
     handleSpinnerSelect = (ingredient) => {
@@ -91,6 +113,7 @@ class HomePage extends Component {
 
         return (
             <React.Fragment>
+                <ToastContainer />
             <div className="row">
                 <div className="col-3">
                     <Spinner
