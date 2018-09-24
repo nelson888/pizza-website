@@ -7,6 +7,7 @@ import com.tambapps.website.repository.IngredientRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,14 @@ public class IngredientController {
     this.ingredientRepository = ingredientRepository;
   }
 
-  @GetMapping("/all")
+  @GetMapping("")
   public List<Ingredient> getAllIngredients() {
     return ingredientRepository.findAll();
+  }
+
+  @GetMapping("/{id}")
+  public Ingredient byId(@PathVariable("id") Long id) {
+    return ingredientRepository.findById(id).orElse(null);
   }
 
   @PostMapping

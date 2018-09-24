@@ -5,12 +5,10 @@ import com.tambapps.website.model.food.Pizza;
 import com.tambapps.website.model.payload.ApiResponse;
 import com.tambapps.website.model.user.User;
 import com.tambapps.website.model.user.UserDetailsImpl;
-import com.tambapps.website.repository.IngredientRepository;
 import com.tambapps.website.repository.PizzaRepository;
 import com.tambapps.website.repository.UserRepository;
 import com.tambapps.website.security.CurrentUser;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
