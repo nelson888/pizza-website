@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
 
     private final Long id;
-    private final String name;
-    private final String lastName;
+    private final String username;
     @JsonIgnore
     private final String email;
     @JsonIgnore
@@ -36,7 +35,7 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())
         ).collect(Collectors.toList());
-        return new UserDetailsImpl(user.getId(), user.getName(), user.getLastName(), user.getEmail(), user.getPassword(),
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(),
                 authorities);
     }
     @Override

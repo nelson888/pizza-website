@@ -32,11 +32,7 @@ public class User {
   protected String password;
   @NonNull
   @Pattern(regexp = ALPHABETIC_REGEX)
-  protected String name;
-  @Column(name = "last_name")
-  @NonNull
-  @Pattern(regexp = ALPHABETIC_REGEX)
-  protected String lastName;
+  protected String username;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(name = "user_role",

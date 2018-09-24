@@ -9,7 +9,6 @@ public class UserSummary {
 
     private Long id;
     private String email;
-    private String lastName;
-    private String name;
+    private String username;
 
 }

@@ -32,7 +32,9 @@ public class Pizza {
   @NotNull
   private String name;
   @Positive
-  private int price;
+  private int year;
+  @NotNull
+  private String description;
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "pizza_ingredient", joinColumns = @JoinColumn(name = "pizza_id"),
       inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
