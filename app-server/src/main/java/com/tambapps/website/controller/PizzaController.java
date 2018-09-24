@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pizza")
+@RequestMapping("/api/pizzas")
 public class PizzaController {
 
   private final PizzaRepository pizzaRepository;
@@ -30,13 +30,22 @@ public class PizzaController {
     this.userRepository = userRepository;
   }
 
-  @GetMapping("/actives")
-  public List<Pizza> allActive() {
-    return pizzaRepository.findAll();
+  @GetMapping("")
+  public List<Pizza> all(@RequestParam("query") String query) {
+    if (query == null || query.isEmpty()) {
+      return pizzaRepository.findAll();
+    } else {
+      return pizzaRepository.findAllByNameStartingWith(query);
+    }
+  }
+
+  @GetMapping("/byIngredient/{id}")
+  public List<Pizza> byIngredient(@PathVariable("id") Long id) {
+    return pizzaRepository.findAllByIngredientsContaining(id);
   }
 
   @PostMapping
-  @PreAuthorize("hasRole('COOK')")
+  //@PreAuthorize("hasRole('COOK')")
   public ResponseEntity<?> newPizza(@CurrentUser UserDetailsImpl currentUser, @Valid @RequestBody Pizza pizza) {
     pizza.setId(null); //to force auto-increment
     User user = userRepository.findById(currentUser.getId())

@@ -92,7 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasAnyRole(UserRoleName.ADMIN.name())
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/pizza/**", "/api/users/**")
+                .antMatchers(HttpMethod.GET, "/api/pizzas/**", "/api/users/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
